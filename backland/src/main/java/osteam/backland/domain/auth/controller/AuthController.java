@@ -25,6 +25,7 @@ import osteam.backland.domain.auth.service.AuthMailSearchService;
 import osteam.backland.domain.auth.service.MailService;
 import osteam.backland.domain.user.controller.request.TokenRequest;
 import osteam.backland.domain.user.controller.response.TokenResponse;
+import osteam.backland.domain.user.exception.TokenNotFoundException;
 import osteam.backland.domain.user.service.TokenCreationService;
 import osteam.backland.domain.user.service.TokenDeletionService;
 import osteam.backland.domain.user.service.TokenValidationService;
@@ -91,20 +92,21 @@ public class AuthController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = @Content(schema = @Schema(implementation = RefreshTokenResponse.class))),
-            @ApiResponse(responseCode = "403", description = "인증 메일 10분 대기 시간",
-                    content = @Content(schema = @Schema(implementation = AlreadySendCodeException.class))
+            @ApiResponse(responseCode = "404", description = "리프레시 토큰이 redis에 없습니다.",
+                    content = @Content(schema = @Schema(implementation = TokenNotFoundException.class))
             )
     })
     @PostMapping("/reissue")
     public ResponseEntity<TokenResponse> reissue(@RequestBody @Valid TokenRequest request) {
         String beforeRefreshToken = request.getRefreshToken();
 
-        String ip
         String id = tokenValidationService.searchTokenUserId(beforeRefreshToken);
+
+        tokenValidationService.validationRefreshToken(beforeRefreshToken);
 
         tokenDeletionService.deleteRefreshToken(request.getAccessToken(), request.getRefreshToken());
         String accessToken = tokenCreationService.createAccessToken(id);
-        String refreshToken = tokenCreationService.createRefreshToken(id, ip);
+        String refreshToken = tokenCreationService.createRefreshToken(id);
 
         return ResponseEntity.ok(new TokenResponse(accessToken, refreshToken));
     }
