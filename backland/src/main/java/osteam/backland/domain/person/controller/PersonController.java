@@ -29,9 +29,9 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
 
-    private PersonCreateService personCreateService;
-    private PersonUpdateService personUpdateService;
-    private PersonSearchService personSearchService;
+    private final PersonCreateService personCreateService;
+    private final PersonUpdateService personUpdateService;
+    private final PersonSearchService personSearchService;
 
     /**
      * 등록 기능

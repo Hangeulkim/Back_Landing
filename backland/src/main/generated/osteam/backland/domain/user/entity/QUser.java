@@ -20,20 +20,25 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final osteam.backland.global.entity.QPrimaryKeyEntity _super = new osteam.backland.global.entity.QPrimaryKeyEntity(this);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
-    //inherited
-    public final ComparablePath<java.util.UUID> id = _super.id;
+    public final StringPath email = createString("email");
+
+    public final BooleanPath emailVerified = createBoolean("emailVerified");
+
+    public final StringPath id = createString("id");
+
+    public final BooleanPath locked = createBoolean("locked");
+
+    public final StringPath name = createString("name");
 
     public final ListPath<osteam.backland.domain.person.entity.Person, osteam.backland.domain.person.entity.QPerson> people = this.<osteam.backland.domain.person.entity.Person, osteam.backland.domain.person.entity.QPerson>createList("people", osteam.backland.domain.person.entity.Person.class, osteam.backland.domain.person.entity.QPerson.class, PathInits.DIRECT2);
 
-    public final EnumPath<osteam.backland.global.entity.Role> role = createEnum("role", osteam.backland.global.entity.Role.class);
+    public final StringPath pwd = createString("pwd");
 
-    public final StringPath userId = createString("userId");
+    public final EnumPath<osteam.backland.global.attribute.Role> role = createEnum("role", osteam.backland.global.attribute.Role.class);
 
-    public final StringPath userName = createString("userName");
-
-    public final StringPath userPwd = createString("userPwd");
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

@@ -1,4 +1,4 @@
-package osteam.backland.global.entity;
+package osteam.backland.global.attribute;
 
 import lombok.RequiredArgsConstructor;
 

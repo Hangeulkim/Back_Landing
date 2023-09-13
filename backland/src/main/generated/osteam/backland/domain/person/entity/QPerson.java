@@ -22,10 +22,7 @@ public class QPerson extends EntityPathBase<Person> {
 
     public static final QPerson person = new QPerson("person");
 
-    public final osteam.backland.global.entity.QPrimaryKeyEntity _super = new osteam.backland.global.entity.QPrimaryKeyEntity(this);
-
-    //inherited
-    public final ComparablePath<java.util.UUID> id = _super.id;
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
 
