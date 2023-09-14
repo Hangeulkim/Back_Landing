@@ -5,6 +5,6 @@ COPY ${JAR_FILE} app.jar
 
 VOLUME /tmp
 
-EXPOSE 8081
+EXPOSE 8082
 
 ENTRYPOINT ["java", "-jar","/app.jar"]
