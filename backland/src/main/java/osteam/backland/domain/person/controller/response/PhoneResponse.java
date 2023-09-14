@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class PersonResponse {
+public class PhoneResponse {
 
     @NonNull
     private String name;

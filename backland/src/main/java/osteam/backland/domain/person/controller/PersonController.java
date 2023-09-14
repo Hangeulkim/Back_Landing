@@ -1,19 +1,21 @@
 package osteam.backland.domain.person.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import osteam.backland.domain.person.controller.request.PersonCreateRequest;
-import osteam.backland.domain.person.controller.response.PersonResponse;
+import osteam.backland.domain.person.controller.request.PhoneRequest;
+import osteam.backland.domain.person.controller.response.PhoneResponse;
+import osteam.backland.domain.person.entity.dto.PersonDTO;
 import osteam.backland.domain.person.service.PersonCreateService;
 import osteam.backland.domain.person.service.PersonSearchService;
 import osteam.backland.domain.person.service.PersonUpdateService;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * PersonController
@@ -26,7 +28,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/person")
 public class PersonController {
 
     private final PersonCreateService personCreateService;
@@ -35,41 +36,33 @@ public class PersonController {
 
     /**
      * 등록 기능
-     * personRequest를 service에 그대로 넘겨주지 말 것.
+     * 중복되는 전화번호가 있을 시 이름을 변경
      *
-     * @param personCreateRequest
+     * @param request
      * @return 성공 시 이름 반환
      */
-    @PostMapping
-    public String person(PersonCreateRequest personCreateRequest) {
-        return personCreateRequest.getName();
+    @MutationMapping
+    public PhoneResponse createOrUpdatePerson(@Argument @RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
+        String accessToken = auth.substring(7);
+        PersonDTO personDTO = personSearchService.searchPerson(accessToken, request.getPhone());
+
+        if (personDTO == null) {
+            personDTO = personCreateService.createPerson(accessToken, request.getName(), request.getPhone());
+        } else {
+            personDTO = personUpdateService.modifyPersonName(accessToken, request.getName(), request.getPhone());
+        }
+
+        return new PhoneResponse(personDTO.getName(), personDTO.getPhone());
     }
 
     /**
-     * 전체 검색 기능
+     * 검색 기능
      */
-    @GetMapping
-    public ResponseEntity<List<PersonResponse>> getPeople() {
-        return null;
-    }
+    @QueryMapping
+    public Set<PhoneResponse> getPeople(@Argument @RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
+        String accessToken = auth.substring(7);
 
-    /**
-     * 이름으로 검색
-     *
-     * @param name
-     */
-    @GetMapping("/name")
-    public ResponseEntity<List<PersonResponse>> getPeopleByName(String name) {
-        return null;
-    }
-
-    /**
-     * 번호로 검색
-     *
-     * @param phone
-     */
-    @GetMapping("/phone")
-    public ResponseEntity<List<PersonResponse>> getPeopleByPhone(String phone) {
-        return null;
+        Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
+        return peopleResponse;
     }
 }

@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final LogFilter logFilter;
@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests((request) -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/auth/**", "/user/signup", "/user/login", "/api-docs/**", "/swagger*/**").permitAll()
+                        .requestMatchers("/auth/**", "/user/signup", "/user/login", "/api-docs/**", "/swagger*/**", "/graphiql/**", "/graphql/**").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();

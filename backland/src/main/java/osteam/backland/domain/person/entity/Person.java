@@ -4,10 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import osteam.backland.domain.user.entity.User;
 
 @Entity
@@ -18,11 +16,19 @@ public class Person {
     @Id
     private Long id;
 
+    @Setter
+    @NotNull
     private String name;
 
+    @NotNull
     private String phone;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Person(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
 }

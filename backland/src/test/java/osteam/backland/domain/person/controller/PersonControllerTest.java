@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import osteam.backland.domain.person.controller.request.PersonCreateRequest;
+import osteam.backland.domain.person.controller.request.PhoneRequest;
 
 @SpringBootTest
 public class PersonControllerTest {
@@ -16,7 +16,7 @@ public class PersonControllerTest {
     @Test
     void longNamePersonTest() throws JsonProcessingException {
         String longNamePerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         "teamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                         "01012341234"
                 ));
@@ -25,7 +25,7 @@ public class PersonControllerTest {
     @Test
     void longPhonePersonTest() throws JsonProcessingException {
         String longPhonePerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         "team",
                         "010123412341111111111111111111111"
                 ));
@@ -34,7 +34,7 @@ public class PersonControllerTest {
     @Test
     void shortPhonePersonTest() throws JsonProcessingException {
         String shortPhonePerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         "team",
                         "010"
                 ));
@@ -43,7 +43,7 @@ public class PersonControllerTest {
     @Test
     void nullPersonTest() throws JsonProcessingException {
         String nullPerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         null,
                         null
                 ));
@@ -52,7 +52,7 @@ public class PersonControllerTest {
     @Test
     void blankPersonTest() throws JsonProcessingException {
         String blankPerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         "",
                         ""
                 ));
@@ -72,13 +72,13 @@ public class PersonControllerTest {
         String changeName = "team";
 
         String successPerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         originName,
                         phone
                 ));
 
         String changePerson = objectMapper
-                .writeValueAsString(new PersonCreateRequest(
+                .writeValueAsString(new PhoneRequest(
                         changeName,
                         phone
                 ));

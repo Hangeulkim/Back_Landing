@@ -10,7 +10,7 @@ import osteam.backland.domain.user.repository.custom.UserRepositoryCustom;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class UserRepositoryCustomImpl implements UserRepositoryCustom {
+public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
     private final QUser user = QUser.user;

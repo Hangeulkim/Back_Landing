@@ -1,0 +1,22 @@
+type Query{
+    getPeople(auth: String, request: SearchRequest): [PhoneResponse]
+}
+
+type Mutation{
+    createOrUpdatePerson(auth: String, request: PhoneRequest) : PhoneResponse!
+}
+
+type PhoneResponse{
+    name: String!
+    phoneNumber: String!
+}
+
+input SearchRequest{
+    name: String
+    phoneNumber: String
+}
+
+input PhoneRequest{
+    name: String!
+    phoneNumber: String!
+}

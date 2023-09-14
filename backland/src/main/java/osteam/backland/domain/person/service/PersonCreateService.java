@@ -1,36 +1,33 @@
 package osteam.backland.domain.person.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import osteam.backland.domain.person.entity.Person;
 import osteam.backland.domain.person.entity.dto.PersonDTO;
+import osteam.backland.domain.user.entity.User;
+import osteam.backland.domain.user.exception.UserNotFoundException;
+import osteam.backland.domain.user.repository.jpa.UserRepository;
+import osteam.backland.global.security.service.JwtTokenService;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PersonCreateService {
+    private final UserRepository userRepository;
+    private final JwtTokenService jwtTokenService;
 
-    public PersonDTO createAll(String name, String phone) {
+    public PersonDTO createPerson(String token, String name, String phone) {
+        String userId = jwtTokenService.getData(token);
+        User user = userRepository.findUserById(userId);
 
-        return null;
-    }
+        if (user == null) {
+            throw new UserNotFoundException(userId);
+        }
 
-    /**
-     * Phone과 OneToOne 관계인 person 생성
-     */
-    public PersonDTO oneToOne(String name, String phone) {
-        return null;
-    }
+        Person person = new Person(name, phone);
+        user.addPerson(person);
 
-    /**
-     * Phone과 OneToMany 관계인 person 생성
-     */
-    public PersonDTO oneToMany(String name, String phone) {
-        return null;
-    }
-
-    /**
-     * person 하나로만 구성되어 있는 생성
-     */
-    public PersonDTO one(String name, String phone) {
-        return null;
+        return new PersonDTO(name, phone);
     }
 }
