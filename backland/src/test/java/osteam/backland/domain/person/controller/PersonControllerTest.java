@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import osteam.backland.domain.person.controller.request.PhoneRequest;
 
-@SpringBootTest
 public class PersonControllerTest {
 
     private MockMvc mock;
