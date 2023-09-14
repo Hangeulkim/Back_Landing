@@ -23,3 +23,6 @@ DB는 주어진 application.properties를 사용합니다.
  
 # 메인 branch에 push하지 말고 각자 레포지토리로 fork 해서 완성 해주세요.
 
+graphql : https://moviethree.synology.me/back/graphiql?path=/back/graphql
+rest api : https://moviethree.synology.me/back/api-docs
+
