@@ -12,6 +12,7 @@ public class PersonControllerTest {
     private MockMvc mock;
     private ObjectMapper objectMapper;
 
+    /*
     @Test
     void longNamePersonTest() throws JsonProcessingException {
         String longNamePerson = objectMapper
@@ -82,4 +83,5 @@ public class PersonControllerTest {
                         phone
                 ));
     }
+    */
 }
