@@ -8,10 +8,12 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import osteam.backland.domain.person.controller.request.DeleteRequest;
 import osteam.backland.domain.person.controller.request.PhoneRequest;
 import osteam.backland.domain.person.controller.response.PhoneResponse;
 import osteam.backland.domain.person.entity.dto.PersonDTO;
 import osteam.backland.domain.person.service.PersonCreateService;
+import osteam.backland.domain.person.service.PersonDeleteService;
 import osteam.backland.domain.person.service.PersonSearchService;
 import osteam.backland.domain.person.service.PersonUpdateService;
 
@@ -33,6 +35,8 @@ public class PersonController {
     private final PersonCreateService personCreateService;
     private final PersonUpdateService personUpdateService;
     private final PersonSearchService personSearchService;
+
+    private final PersonDeleteService personDeleteService;
 
     /**
      * 등록 기능
@@ -64,5 +68,16 @@ public class PersonController {
 
         Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
         return peopleResponse;
+    }
+
+    /**
+     * 삭제기능
+     */
+    @MutationMapping
+    public Long deletePerson(@Argument @RequestHeader(name = "Authorization") String auth, @Argument @Valid DeleteRequest request) {
+        String accessToken = auth.substring(7);
+        long personId = personDeleteService.deletePerson(accessToken, request.getName());
+
+        return personId;
     }
 }

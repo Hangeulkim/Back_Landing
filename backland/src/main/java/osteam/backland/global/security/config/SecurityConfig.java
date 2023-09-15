@@ -37,7 +37,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((request) -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/auth/**", "/user/signup", "/user/login", "/api-docs/**", "/swagger*/**", "/graphiql/**", "/graphql/**").permitAll()
+                        .requestMatchers("/auth/**", "/user/signup", "/user/login", "/api-docs/**", "/swagger*/**", "/graphiql/**", "/graphql", "/back/graphiql/**", "/back/graphql").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();

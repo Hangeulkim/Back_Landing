@@ -4,6 +4,7 @@ type Query{
 
 type Mutation{
     createOrUpdatePerson(auth: String, request: PhoneRequest) : PhoneResponse!
+    deletePerson(auth: String, request: DeleteRequest): Float
 }
 
 type PhoneResponse{
@@ -18,5 +19,9 @@ input SearchRequest{
 
 input PhoneRequest{
     name: String!
+    phoneNumber: String!
+}
+
+input DeleteRequest{
     phoneNumber: String!
 }
