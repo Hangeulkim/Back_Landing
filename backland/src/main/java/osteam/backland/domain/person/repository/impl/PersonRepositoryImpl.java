@@ -4,7 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.graphql.data.GraphQlRepository;
 import osteam.backland.domain.person.entity.Person;
 import osteam.backland.domain.person.entity.QPerson;
 import osteam.backland.domain.person.entity.dto.PersonDTO;
@@ -14,7 +14,7 @@ import osteam.backland.domain.user.entity.QUser;
 import java.util.HashSet;
 import java.util.Set;
 
-@Repository
+@GraphQlRepository
 public class PersonRepositoryImpl implements PersonRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QPerson person;

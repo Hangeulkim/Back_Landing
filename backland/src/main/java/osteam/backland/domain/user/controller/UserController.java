@@ -59,11 +59,17 @@ public class UserController {
 
     @Operation(summary = "회원 탈퇴 함수", description = "회원 탈퇴 함수 입니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공")
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "가입된 회원이 없습니다.",
+                    content = @Content(schema = @Schema(implementation = UserNotFoundException.class)))
     })
     @DeleteMapping
     public ResponseEntity<String> deleteUser(@RequestBody @Valid TokenRequest request) {
+        //유저 정보 삭제
+        userDeletionService.deleteUser(request.getAccessToken());
 
+        //refreshtoken을 redis에서 삭제하고 accessToken을 이용하여 재 로그인 방지를 위한 등록 과정을 진행
+        tokenDeletionService.deleteRefreshToken(request.getAccessToken(), request.getRefreshToken());
 
         return ResponseEntity.ok("ok");
     }

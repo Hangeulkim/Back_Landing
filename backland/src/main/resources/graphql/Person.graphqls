@@ -8,20 +8,20 @@ type Mutation{
 }
 
 type PhoneResponse{
-    name: String!
-    phoneNumber: String!
-}
-
-input SearchRequest{
     name: String
     phoneNumber: String
 }
 
+input SearchRequest{
+    name: String
+    phone: String
+}
+
 input PhoneRequest{
     name: String!
-    phoneNumber: String!
+    phone: String!
 }
 
 input DeleteRequest{
-    phoneNumber: String!
+    phone: String!
 }

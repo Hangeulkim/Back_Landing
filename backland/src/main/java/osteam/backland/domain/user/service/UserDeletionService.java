@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import osteam.backland.domain.user.exception.UserNotFoundException;
 import osteam.backland.domain.user.repository.jpa.UserRepository;
+import osteam.backland.global.security.service.JwtTokenService;
 
 @Slf4j
 @Transactional
@@ -14,9 +15,12 @@ import osteam.backland.domain.user.repository.jpa.UserRepository;
 public class UserDeletionService {
     private final UserRepository userRepository;
 
-    public void deleteUser(String id) {
-        userRepository.delete(userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException(id)));
+    private final JwtTokenService jwtTokenService;
+
+    public void deleteUser(String token) {
+        String userId = jwtTokenService.getData(token);
+        userRepository.delete(userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException(userId)));
 
     }
 }
