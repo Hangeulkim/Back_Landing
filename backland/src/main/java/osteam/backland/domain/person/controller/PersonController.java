@@ -46,7 +46,7 @@ public class PersonController {
      * @return 성공 시 이름 반환
      */
     @MutationMapping
-    public PhoneResponse createOrUpdatePerson(@Argument @RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
+    public PhoneResponse createOrUpdatePerson(@RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
         String accessToken = auth.substring(7);
         PersonDTO personDTO = personSearchService.searchPerson(accessToken, request.getPhone());
 
@@ -63,7 +63,7 @@ public class PersonController {
      * 검색 기능
      */
     @QueryMapping
-    public Set<PhoneResponse> getPeople(@Argument @RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
+    public Set<PhoneResponse> getPeople(@RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
         String accessToken = auth.substring(7);
 
         Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
@@ -74,7 +74,7 @@ public class PersonController {
      * 삭제기능
      */
     @MutationMapping
-    public Long deletePerson(@Argument @RequestHeader(name = "Authorization") String auth, @Argument @Valid DeleteRequest request) {
+    public Long deletePerson(@RequestHeader(name = "Authorization") String auth, @Argument @Valid DeleteRequest request) {
         String accessToken = auth.substring(7);
         long personId = personDeleteService.deletePerson(accessToken, request.getName());
 

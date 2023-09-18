@@ -1,10 +1,10 @@
 type Query{
-    getPeople(auth: String, request: SearchRequest): [PhoneResponse]
+    getPeople(request: SearchRequest): [PhoneResponse]
 }
 
 type Mutation{
-    createOrUpdatePerson(auth: String, request: PhoneRequest) : PhoneResponse!
-    deletePerson(auth: String, request: DeleteRequest): Float
+    createOrUpdatePerson(request: PhoneRequest) : PhoneResponse!
+    deletePerson(request: DeleteRequest): Float
 }
 
 type PhoneResponse{
