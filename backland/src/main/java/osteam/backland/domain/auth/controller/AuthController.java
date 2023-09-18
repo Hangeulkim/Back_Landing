@@ -19,10 +19,7 @@ import osteam.backland.domain.auth.controller.request.AuthMailRequest;
 import osteam.backland.domain.auth.exception.AlreadySendCodeException;
 import osteam.backland.domain.auth.exception.CodeDifException;
 import osteam.backland.domain.auth.exception.MailServiceUnavailableException;
-import osteam.backland.domain.auth.service.AuthLogCreationService;
-import osteam.backland.domain.auth.service.AuthMailModificationService;
-import osteam.backland.domain.auth.service.AuthMailSearchService;
-import osteam.backland.domain.auth.service.MailService;
+import osteam.backland.domain.auth.service.*;
 import osteam.backland.domain.user.controller.request.TokenRequest;
 import osteam.backland.domain.user.controller.response.TokenResponse;
 import osteam.backland.domain.user.exception.TokenNotFoundException;
@@ -41,6 +38,8 @@ public class AuthController {
 
     private final AuthMailSearchService authMailSearchService;
     private final AuthMailModificationService authMailModificationService;
+
+    private final AuthMailCreateService authMailCreateService;
     private final AuthLogCreationService authLogCreationService;
 
     private final TokenDeletionService tokenDeletionService;
@@ -82,7 +81,9 @@ public class AuthController {
 
         authMailSearchService.authCodeNotExist(request.getEmail());
 
-        mailService.sendMail(request.getEmail());
+        String sendCode = mailService.sendMail(request.getEmail());
+
+        authMailCreateService.authCodeCreate(request.getEmail(), sendCode);
 
         return ResponseEntity.ok("ok");
     }

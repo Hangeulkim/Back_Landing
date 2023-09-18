@@ -1,9 +1,6 @@
 package osteam.backland.domain.auth.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,9 @@ public class AuthLog {
     private LocalDateTime createdAt;
 
     @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
     private Long id;
 
     @NotNull

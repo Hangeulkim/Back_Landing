@@ -59,7 +59,7 @@ public class AuthMailSearchService {
     public boolean authCodeSameWithInputCode(String email, String authCode) {
         String authCodeSearch = authCodeExist(email);
 
-        if (authCodeSearch.equals(authCode)) {
+        if (!authCodeSearch.equals(authCode)) {
             throw new CodeDifException();
         }
 

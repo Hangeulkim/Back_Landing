@@ -1,9 +1,6 @@
 package osteam.backland.domain.auth.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,9 +36,12 @@ public class AuthMail {
     private boolean isSuccess;
 
     @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
     private Long id;
 
-    public AuthMail(String authCode, LocalDateTime endAt, String email) {
+    public AuthMail(String email, String authCode, LocalDateTime endAt) {
         this.authCode = authCode;
         this.endAt = endAt;
         this.email = email;

@@ -32,6 +32,7 @@ public class User implements UserDetails {
 
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private String id;
 

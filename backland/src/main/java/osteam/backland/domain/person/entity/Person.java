@@ -1,9 +1,6 @@
 package osteam.backland.domain.person.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import osteam.backland.domain.user.entity.User;
@@ -14,6 +11,9 @@ import osteam.backland.domain.user.entity.User;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Person {
     @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
     private Long id;
 
     @Setter
