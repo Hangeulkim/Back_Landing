@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import osteam.backland.domain.person.controller.request.DeleteRequest;
 import osteam.backland.domain.person.controller.request.PhoneRequest;
+import osteam.backland.domain.person.controller.request.SearchRequest;
 import osteam.backland.domain.person.controller.response.PhoneResponse;
 import osteam.backland.domain.person.entity.dto.PersonDTO;
 import osteam.backland.domain.person.service.PersonCreateService;
@@ -63,7 +64,7 @@ public class PersonController {
      * 검색 기능
      */
     @QueryMapping
-    public Set<PhoneResponse> getPeople(@RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
+    public Set<PhoneResponse> getPeople(@RequestHeader(name = "Authorization") String auth, @Argument @Valid SearchRequest request) {
         String accessToken = auth.substring(7);
 
         Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
