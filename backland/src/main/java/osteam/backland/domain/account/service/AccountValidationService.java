@@ -19,7 +19,7 @@ public class AccountValidationService {
     private final PasswordEncoder pe;
 
     public boolean userNameOrEmailExist(String userName, String email) {
-        Account account = accountRepository.findUserByEmailOrName(email, userName);
+        Account account = accountRepository.findAccountByEmailOrName(email, userName);
 
         if (account != null) {
             throw new UserAlreadyExistException();
@@ -29,7 +29,7 @@ public class AccountValidationService {
     }
 
     public boolean userValidate(String id, String pwd) {
-        Account account = accountRepository.findUserById(id);
+        Account account = accountRepository.findAccountById(id);
 
         if (account == null) {
             throw new UserNotFoundException(id);

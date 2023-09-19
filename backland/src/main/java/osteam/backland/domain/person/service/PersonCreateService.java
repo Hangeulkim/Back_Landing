@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import osteam.backland.domain.person.entity.Person;
-import osteam.backland.domain.person.entity.dto.PersonDTO;
 import osteam.backland.domain.account.entity.Account;
 import osteam.backland.domain.account.exception.UserNotFoundException;
 import osteam.backland.domain.account.repository.jpa.AccountRepository;
+import osteam.backland.domain.person.entity.Person;
+import osteam.backland.domain.person.entity.dto.PersonDTO;
 import osteam.backland.global.security.service.JwtTokenService;
 
 @Service
@@ -21,7 +21,7 @@ public class PersonCreateService {
 
     public PersonDTO createPerson(String token, String name, String phone) {
         String userId = jwtTokenService.getData(token);
-        Account account = accountRepository.findUserById(userId);
+        Account account = accountRepository.findAccountById(userId);
 
         if (account == null) {
             throw new UserNotFoundException(userId);

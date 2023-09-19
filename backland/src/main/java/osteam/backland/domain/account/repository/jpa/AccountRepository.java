@@ -9,7 +9,7 @@ import osteam.backland.domain.account.repository.custom.AccountRepositoryCustom;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String>, AccountRepositoryCustom {
 
-    Account findUserByEmailOrName(String email, String name);
+    Account findAccountByEmailOrName(String email, String name);
 
-    Account findUserById(String id);
+    Account findAccountById(String id);
 }

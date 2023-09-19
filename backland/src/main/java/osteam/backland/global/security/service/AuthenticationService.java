@@ -18,7 +18,7 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) {
-        Account account = accountRepository.findUserById(userId);
+        Account account = accountRepository.findAccountById(userId);
         if (account == null) {
             throw new UserNotFoundException(userId);
         }
