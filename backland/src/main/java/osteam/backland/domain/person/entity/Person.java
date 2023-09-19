@@ -3,7 +3,7 @@ package osteam.backland.domain.person.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import osteam.backland.domain.user.entity.User;
+import osteam.backland.domain.account.entity.Account;
 
 @Entity
 @Getter
@@ -25,8 +25,8 @@ public class Person {
 
     @ManyToOne
     @Setter
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public Person(String name, String phone) {
         this.name = name;

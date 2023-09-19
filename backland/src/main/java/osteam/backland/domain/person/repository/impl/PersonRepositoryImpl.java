@@ -5,11 +5,11 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.GraphQlRepository;
+import osteam.backland.domain.account.entity.QAccount;
 import osteam.backland.domain.person.entity.Person;
 import osteam.backland.domain.person.entity.QPerson;
 import osteam.backland.domain.person.entity.dto.PersonDTO;
 import osteam.backland.domain.person.repository.custom.PersonRepositoryCustom;
-import osteam.backland.domain.user.entity.QUser;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,21 +18,21 @@ import java.util.Set;
 public class PersonRepositoryImpl implements PersonRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QPerson person;
-    private final QUser user;
+    private final QAccount account;
 
     @Autowired
     public PersonRepositoryImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
         this.person = QPerson.person;
-        this.user = QUser.user;
+        this.account = QAccount.account;
     }
 
     @Override
     public Person searchPersonByUserIdAndPhone(String userId, String phone) {
         return queryFactory.selectFrom(person)
-                .join(person.user, user)
+                .join(person.account, account)
                 .fetchJoin()
-                .where(user.id.eq(userId), person.phone.eq(phone))
+                .where(account.id.eq(userId), person.phone.eq(phone))
                 .fetchOne();
     }
 
@@ -46,8 +46,8 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                                         person.phone
                                 )
                         ).from(person)
-                        .join(person.user, user)
-                        .where(user.id.eq(userId), nameContain(name), phoneContain(phone))
+                        .join(person.account, account)
+                        .where(account.id.eq(userId), nameContain(name), phoneContain(phone))
                         .fetch());
     }
 

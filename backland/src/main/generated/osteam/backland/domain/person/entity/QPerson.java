@@ -22,13 +22,13 @@ public class QPerson extends EntityPathBase<Person> {
 
     public static final QPerson person = new QPerson("person");
 
+    public final osteam.backland.domain.account.entity.QAccount account;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
 
     public final StringPath phone = createString("phone");
-
-    public final osteam.backland.domain.user.entity.QUser user;
 
     public QPerson(String variable) {
         this(Person.class, forVariable(variable), INITS);
@@ -48,7 +48,7 @@ public class QPerson extends EntityPathBase<Person> {
 
     public QPerson(Class<? extends Person> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new osteam.backland.domain.user.entity.QUser(forProperty("user")) : null;
+        this.account = inits.isInitialized("account") ? new osteam.backland.domain.account.entity.QAccount(forProperty("account")) : null;
     }
 
 }

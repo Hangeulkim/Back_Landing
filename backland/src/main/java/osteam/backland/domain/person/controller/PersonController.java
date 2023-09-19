@@ -86,7 +86,7 @@ public class PersonController {
     public Long deletePerson(@Argument @Valid DeleteRequest request) {
         String auth = httpServletRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
-        long personId = personDeleteService.deletePerson(accessToken, request.getName());
+        long personId = personDeleteService.deletePerson(accessToken, request.getPhone());
 
         return personId;
     }

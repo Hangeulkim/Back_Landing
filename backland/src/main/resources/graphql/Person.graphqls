@@ -4,7 +4,7 @@ type Query{
 
 type Mutation{
     createOrUpdatePerson(request: PhoneRequest) : PhoneResponse!
-    deletePerson(request: DeleteRequest): Float
+    deletePerson(request: DeleteRequest!): Float
 }
 
 type PhoneResponse{

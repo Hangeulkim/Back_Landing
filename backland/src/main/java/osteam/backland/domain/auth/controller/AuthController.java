@@ -20,12 +20,12 @@ import osteam.backland.domain.auth.exception.AlreadySendCodeException;
 import osteam.backland.domain.auth.exception.CodeDifException;
 import osteam.backland.domain.auth.exception.MailServiceUnavailableException;
 import osteam.backland.domain.auth.service.*;
-import osteam.backland.domain.user.controller.request.TokenRequest;
-import osteam.backland.domain.user.controller.response.TokenResponse;
-import osteam.backland.domain.user.exception.TokenNotFoundException;
-import osteam.backland.domain.user.service.TokenCreationService;
-import osteam.backland.domain.user.service.TokenDeletionService;
-import osteam.backland.domain.user.service.TokenValidationService;
+import osteam.backland.domain.account.controller.request.TokenRequest;
+import osteam.backland.domain.account.controller.response.TokenResponse;
+import osteam.backland.domain.account.exception.TokenNotFoundException;
+import osteam.backland.domain.account.service.TokenCreationService;
+import osteam.backland.domain.account.service.TokenDeletionService;
+import osteam.backland.domain.account.service.TokenValidationService;
 import osteam.backland.global.security.response.RefreshTokenResponse;
 import osteam.backland.global.security.service.IpSearchService;
 
