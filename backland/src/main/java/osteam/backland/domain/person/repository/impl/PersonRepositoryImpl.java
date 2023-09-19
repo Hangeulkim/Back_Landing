@@ -47,7 +47,6 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                                 )
                         ).from(person)
                         .join(person.user, user)
-                        .fetchJoin()
                         .where(user.id.eq(userId), nameContain(name), phoneContain(phone))
                         .fetch());
     }
