@@ -1,12 +1,12 @@
 package osteam.backland.domain.person.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import osteam.backland.domain.person.controller.request.DeleteRequest;
 import osteam.backland.domain.person.controller.request.PhoneRequest;
@@ -47,7 +47,8 @@ public class PersonController {
      * @return 성공 시 이름 반환
      */
     @MutationMapping
-    public PhoneResponse createOrUpdatePerson(@RequestHeader(name = "Authorization") String auth, @Argument @Valid PhoneRequest request) {
+    public PhoneResponse createOrUpdatePerson(@Argument @Valid PhoneRequest request, HttpServletRequest httpRequest) {
+        String auth = httpRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
         PersonDTO personDTO = personSearchService.searchPerson(accessToken, request.getPhone());
 
@@ -64,7 +65,8 @@ public class PersonController {
      * 검색 기능
      */
     @QueryMapping
-    public Set<PhoneResponse> getPeople(@RequestHeader(name = "Authorization") String auth, @Argument @Valid SearchRequest request) {
+    public Set<PhoneResponse> getPeople(@Argument @Valid SearchRequest request, HttpServletRequest httpRequest) {
+        String auth = httpRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
 
         Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
@@ -75,7 +77,8 @@ public class PersonController {
      * 삭제기능
      */
     @MutationMapping
-    public Long deletePerson(@RequestHeader(name = "Authorization") String auth, @Argument @Valid DeleteRequest request) {
+    public Long deletePerson(@Argument @Valid DeleteRequest request, HttpServletRequest httpRequest) {
+        String auth = httpRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
         long personId = personDeleteService.deletePerson(accessToken, request.getName());
 
