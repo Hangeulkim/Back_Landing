@@ -7,5 +7,5 @@ import osteam.backland.domain.person.repository.custom.PersonRepositoryCustom;
 
 @GraphQlRepository
 public interface PersonRepository extends JpaRepository<Person, Long>, PersonRepositoryCustom {
-    Person findByPhone(String phone);
+    
 }

@@ -21,7 +21,7 @@ public class PersonDeleteService {
     public long deletePerson(String token, String phone) {
         String userId = jwtTokenService.getData(token);
 
-        Person person = personRepository.findByPhone(phone);
+        Person person = personRepository.searchPersonByUserIdAndPhone(userId, phone);
 
         if (person == null) {
             throw new PersonNotFoundException(phone);
