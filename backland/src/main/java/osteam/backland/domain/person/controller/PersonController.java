@@ -33,6 +33,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PersonController {
 
+    private final HttpServletRequest httpServletRequest;
     private final PersonCreateService personCreateService;
     private final PersonUpdateService personUpdateService;
     private final PersonSearchService personSearchService;
@@ -47,8 +48,8 @@ public class PersonController {
      * @return 성공 시 이름 반환
      */
     @MutationMapping
-    public PhoneResponse createOrUpdatePerson(@Argument @Valid PhoneRequest request, HttpServletRequest httpRequest) {
-        String auth = httpRequest.getHeader("Authorization");
+    public PhoneResponse createOrUpdatePerson(@Argument @Valid PhoneRequest request) {
+        String auth = httpServletRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
         PersonDTO personDTO = personSearchService.searchPerson(accessToken, request.getPhone());
 
@@ -65,8 +66,8 @@ public class PersonController {
      * 검색 기능
      */
     @QueryMapping
-    public Set<PhoneResponse> getPeople(@Argument @Valid SearchRequest request, HttpServletRequest httpRequest) {
-        String auth = httpRequest.getHeader("Authorization");
+    public Set<PhoneResponse> getPeople(@Argument @Valid SearchRequest request) {
+        String auth = httpServletRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
 
         Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
@@ -77,8 +78,8 @@ public class PersonController {
      * 삭제기능
      */
     @MutationMapping
-    public Long deletePerson(@Argument @Valid DeleteRequest request, HttpServletRequest httpRequest) {
-        String auth = httpRequest.getHeader("Authorization");
+    public Long deletePerson(@Argument @Valid DeleteRequest request) {
+        String auth = httpServletRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
         long personId = personDeleteService.deletePerson(accessToken, request.getName());
 
