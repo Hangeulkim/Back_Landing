@@ -70,7 +70,12 @@ public class PersonController {
         String auth = httpServletRequest.getHeader("Authorization");
         String accessToken = auth.substring(7);
 
-        Set<PhoneResponse> peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
+        Set<PhoneResponse> peopleResponse;
+        if (request == null) {
+            peopleResponse = personSearchService.searchPeople(accessToken, null, null);
+        } else {
+            peopleResponse = personSearchService.searchPeople(accessToken, request.getName(), request.getPhone());
+        }
         return peopleResponse;
     }
 
