@@ -29,6 +29,7 @@ public class PersonCreateService {
 
         Person person = new Person(name, phone);
         user.addPerson(person);
+        person.setUser(user);
 
         return new PersonDTO(name, phone);
     }

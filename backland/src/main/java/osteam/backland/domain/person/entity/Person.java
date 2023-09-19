@@ -24,6 +24,7 @@ public class Person {
     private String phone;
 
     @ManyToOne
+    @Setter
     @JoinColumn(name = "user_id")
     private User user;
 
