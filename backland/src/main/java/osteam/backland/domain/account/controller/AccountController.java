@@ -9,8 +9,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import osteam.backland.domain.auth.service.AuthMailSearchService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import osteam.backland.domain.account.controller.request.LoginRequest;
 import osteam.backland.domain.account.controller.request.TokenRequest;
 import osteam.backland.domain.account.controller.request.UserSignUpRequest;
@@ -18,6 +20,7 @@ import osteam.backland.domain.account.controller.response.TokenResponse;
 import osteam.backland.domain.account.exception.PasswordDifFromConfirmException;
 import osteam.backland.domain.account.exception.UserNotFoundException;
 import osteam.backland.domain.account.service.*;
+import osteam.backland.domain.auth.service.AuthMailSearchService;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -63,7 +66,7 @@ public class AccountController {
             @ApiResponse(responseCode = "404", description = "가입된 회원이 없습니다.",
                     content = @Content(schema = @Schema(implementation = UserNotFoundException.class)))
     })
-    @DeleteMapping
+    @PostMapping("/signout")
     public ResponseEntity<String> deleteUser(@RequestBody @Valid TokenRequest request) {
         //유저 정보 삭제
         accountDeletionService.deleteUser(request.getAccessToken());
@@ -98,7 +101,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "403", description = "로그아웃에 실패 했습니다.")
     })
-    @DeleteMapping("/logout")
+    @PostMapping("/logout")
     public ResponseEntity<String> login(@RequestBody @Valid TokenRequest request) {
         //refreshtoken을 redis에서 삭제하고 accessToken을 이용하여 재 로그인 방지를 위한 등록 과정을 진행
         tokenDeletionService.deleteRefreshToken(request.getAccessToken(), request.getRefreshToken());
