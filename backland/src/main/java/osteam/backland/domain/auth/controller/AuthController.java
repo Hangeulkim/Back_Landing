@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,18 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import osteam.backland.domain.auth.controller.request.AuthCodeRequest;
-import osteam.backland.domain.auth.controller.request.AuthMailRequest;
-import osteam.backland.domain.auth.exception.AlreadySendCodeException;
-import osteam.backland.domain.auth.exception.CodeDifException;
-import osteam.backland.domain.auth.exception.MailServiceUnavailableException;
-import osteam.backland.domain.auth.service.*;
 import osteam.backland.domain.account.controller.request.TokenRequest;
 import osteam.backland.domain.account.controller.response.TokenResponse;
 import osteam.backland.domain.account.exception.TokenNotFoundException;
 import osteam.backland.domain.account.service.TokenCreationService;
 import osteam.backland.domain.account.service.TokenDeletionService;
 import osteam.backland.domain.account.service.TokenValidationService;
+import osteam.backland.domain.auth.controller.request.AuthCodeRequest;
+import osteam.backland.domain.auth.controller.request.AuthMailRequest;
+import osteam.backland.domain.auth.exception.AlreadySendCodeException;
+import osteam.backland.domain.auth.exception.CodeDifException;
+import osteam.backland.domain.auth.exception.MailServiceUnavailableException;
+import osteam.backland.domain.auth.service.*;
 import osteam.backland.global.security.response.RefreshTokenResponse;
 import osteam.backland.global.security.service.IpSearchService;
 
@@ -47,6 +48,15 @@ public class AuthController {
 
     private final TokenCreationService tokenCreationService;
     private final MailService mailService;
+
+    @PostMapping("/ip")
+    public ResponseEntity<String> testIp(HttpServletRequest request) {
+        String ip = IpSearchService.getClientIP();
+        log.debug(ip);
+        log.debug(request.getHeader("X-Real-IP"));
+
+        return ResponseEntity.ok(ip);
+    }
 
     @Operation(summary = "인증 코드 확인 함수", description = "인증 코드 확인 함수 입니다.")
     @ApiResponses(value = {
