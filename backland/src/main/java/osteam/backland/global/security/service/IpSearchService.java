@@ -11,7 +11,7 @@ import java.util.Objects;
 public class IpSearchService {
 
     private static final String[] IP_HEADER_CANDIDATES = {
-            "X-REAL-IP",
+            "X-Real-IP",
             "X-Forwarded-For",
             "Proxy-Client-IP",
             "WL-Proxy-Client-IP",
