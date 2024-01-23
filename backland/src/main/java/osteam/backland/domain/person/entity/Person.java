@@ -12,7 +12,7 @@ import osteam.backland.domain.account.entity.Account;
 public class Person {
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(unique = true)
     private Long id;
 

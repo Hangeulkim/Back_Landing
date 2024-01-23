@@ -37,7 +37,7 @@ public class AuthMail {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(unique = true)
     private Long id;
 

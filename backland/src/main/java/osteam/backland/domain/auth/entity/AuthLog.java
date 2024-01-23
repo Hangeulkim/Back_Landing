@@ -20,7 +20,7 @@ public class AuthLog {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(unique = true)
     private Long id;
 
